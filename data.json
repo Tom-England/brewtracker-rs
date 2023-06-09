@@ -1,11 +1,10 @@
 {
     "brews": [
-        {"name" : "Traditional Mead 01"},
-        {"name" : "Traditional Mead 02"},
-        {"name" : "Vanilla + Strawberry Melomel"},
-        {"name" : "Raspberry + Rhubarb Melomel"},
-        {"name" : "Blueberry Hydromel"},
-        {"name" : "Peach Mint Mead"},
-        {"name" : "TEST TEST TEST"}
+        {"name" : "Traditional Mead 01", "rating": 4},
+        {"name" : "Traditional Mead 02", "rating": 2},
+        {"name" : "Vanilla + Strawberry Melomel", "rating": 3},
+        {"name" : "Raspberry + Rhubarb Melomel", "rating": 5},
+        {"name" : "Blueberry Hydromel", "rating": 1},
+        {"name" : "Peach Mint Mead", "rating": 2}
     ]
 }

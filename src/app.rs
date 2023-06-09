@@ -15,7 +15,7 @@ use tui::{backend::Backend,
     layout::{Alignment, Layout, Direction, Constraint}
 };
 
-use crate::datatypes::datatypes::{StatefulList, Brews, Brew};
+use crate::datatypes::datatypes::{Brews};
 
 /// This struct holds the current state of the app. In particular, it has the `items` field which is a wrapper
 /// around `ListState`. Keeping track of the items state let us render the associated widget with its state
@@ -23,23 +23,14 @@ use crate::datatypes::datatypes::{StatefulList, Brews, Brew};
 ///
 /// Check the event handling at the bottom to see how to change the state on incoming events.
 /// Check the drawing logic for items on how to specify the highlighting style for selected items.
-pub struct App<'a> {
+pub struct App {
     brews: Brews,
-    items: StatefulList<(&'a str, usize)>
 }
 
-impl<'a> App<'a> {
-    pub fn new() -> App<'a> {
+impl App {
+    pub fn new() -> App {
         App {
             brews: Brews::load_brews_from_file(),
-            items: StatefulList::with_items(vec![
-                ("Traditional Mead 01", 1),
-                ("Traditional Mead 02", 2),
-                ("Vanilla + Strawberry Melomel", 1),
-                ("Raspberry + Rhubarb Melomel", 3),
-                ("Blueberry Hydromel", 1),
-                ("Peach Mint Mead", 4)
-            ]),
         }
     }
 }
@@ -60,9 +51,9 @@ pub fn run_app<B: Backend>(
             if let Event::Key(key) = event::read()? {
                 match key.code {
                     KeyCode::Char('q') => return Ok(()),
-                    KeyCode::Left => app.items.unselect(),
-                    KeyCode::Down => app.items.next(),
-                    KeyCode::Up => app.items.previous(),
+                    KeyCode::Left => app.brews.unselect(),
+                    KeyCode::Down => app.brews.next(),
+                    KeyCode::Up => app.brews.previous(),
                     _ => {}
                 }
             }
@@ -90,7 +81,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     // Surrounding block
     let block = Block::default()
         .borders(Borders::ALL)
-        .title("Brewtracker-rs v0.1.0")
+        .title("Brewtracker-rs v0.2.0")
         .title_alignment(Alignment::Center)
         .border_type(BorderType::Rounded);
     f.render_widget(block, size);
@@ -119,7 +110,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     )
     .highlight_symbol(">> ");
     // We can now render the item list
-    f.render_stateful_widget(items, chunks[0], &mut app.items.state);
+    f.render_stateful_widget(items, chunks[0], &mut app.brews.state);
 
     // Top right inner block with styled title aligned to the right
     let block = Block::default()
