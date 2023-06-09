@@ -10,7 +10,7 @@ use crossterm::event::{Event,
 use tui::{backend::Backend, 
     Terminal, 
     Frame, 
-    widgets::{ListItem, Block, List, Borders, BorderType}, 
+    widgets::{ListItem, Block, List, Borders, BorderType, Paragraph, Wrap}, 
     text::{Spans, Span}, style::{Style, Color, Modifier}, 
     layout::{Alignment, Layout, Direction, Constraint}
 };
@@ -31,31 +31,12 @@ impl<'a> App<'a> {
     pub fn new() -> App<'a> {
         App {
             items: StatefulList::with_items(vec![
-                ("Item0", 1),
-                ("Item1", 2),
-                ("Item2", 1),
-                ("Item3", 3),
-                ("Item4", 1),
-                ("Item5", 4),
-                ("Item6", 1),
-                ("Item7", 3),
-                ("Item8", 1),
-                ("Item9", 6),
-                ("Item10", 1),
-                ("Item11", 3),
-                ("Item12", 1),
-                ("Item13", 2),
-                ("Item14", 1),
-                ("Item15", 1),
-                ("Item16", 4),
-                ("Item17", 1),
-                ("Item18", 5),
-                ("Item19", 4),
-                ("Item20", 1),
-                ("Item21", 2),
-                ("Item22", 1),
-                ("Item23", 3),
-                ("Item24", 1),
+                ("Traditional Mead 01", 1),
+                ("Traditional Mead 02", 2),
+                ("Vanilla + Strawberry Melomel", 1),
+                ("Raspberry + Rhubarb Melomel", 3),
+                ("Blueberry Hydromel", 1),
+                ("Peach Mint Mead", 4)
             ]),
         }
     }
@@ -104,21 +85,6 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     })
     .collect();
 
-    // Create a List from all list items and highlight the currently selected one
-    let items = List::new(items)
-        .block(Block::default()
-            .borders(Borders::RIGHT)
-            .title("My Brews")
-            .title_alignment(Alignment::Center)
-        )
-        .highlight_style(
-            Style::default()
-                .fg(Color::Black)
-                .bg(Color::White)
-                .add_modifier(Modifier::BOLD),
-        )
-        .highlight_symbol(">> ");
-
     // Surrounding block
     let block = Block::default()
         .borders(Borders::ALL)
@@ -133,6 +99,23 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
         .constraints([Constraint::Percentage(30), Constraint::Percentage(50)].as_ref())
         .split(f.size());
 
+    // Create a List from all list items and highlight the currently selected one
+    let items = List::new(items)
+    .block(Block::default()
+        .title(Span::styled("My Brews",
+                Style::default()
+                    .add_modifier(Modifier::BOLD)
+                    .add_modifier(Modifier::UNDERLINED)
+        ))
+        .title_alignment(Alignment::Center)
+    )
+    .highlight_style(
+        Style::default()
+            .fg(Color::Black)
+            .bg(Color::White)
+            .add_modifier(Modifier::BOLD),
+    )
+    .highlight_symbol(">> ");
     // We can now render the item list
     f.render_stateful_widget(items, chunks[0], &mut app.items.state);
 
@@ -141,8 +124,36 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
         .title(Span::styled(
             "Information",
             Style::default()
-                .add_modifier(Modifier::BOLD),
+                .add_modifier(Modifier::BOLD)
+                .add_modifier(Modifier::UNDERLINED),
         ))
+        .borders(Borders::ALL)
         .title_alignment(Alignment::Center);
-    f.render_widget(block, chunks[1]);
+    
+    let text = vec![
+        Spans::from("Rating: ★★★★"),
+        Spans::from(""),
+        Spans::from("Description"),
+        Spans::from("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+        Spans::from(""),
+        Spans::from("Ingredients"),
+        Spans::from(" - Honey"),
+        Spans::from(" - Yeast"),
+        Spans::from(" - Water"),
+        Spans::from(" - DAP"),
+        Spans::from(""),
+        Spans::from("Method"),
+        Spans::from("1) Boil 'em"),
+        Spans::from("2) Mash 'em"),
+        Spans::from("3) Stick 'em in a stew"),
+    ];
+
+    let paragraph = Paragraph::new(text.clone())
+        .style(Style::default())
+        .block(
+            block
+        )
+        .alignment(Alignment::Left)
+        .wrap(Wrap { trim: true });
+    f.render_widget(paragraph, chunks[1]);
 }
