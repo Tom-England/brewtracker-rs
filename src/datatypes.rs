@@ -19,7 +19,8 @@ pub mod datatypes {
         pub name: String,
         pub rating: u8,
         pub description: String,
-        pub ingredients: Vec<String>
+        pub ingredients: Vec<String>,
+        pub method: Vec<String>
     }
     
     impl Brews {

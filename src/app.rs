@@ -81,7 +81,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     // Surrounding block
     let block = Block::default()
         .borders(Borders::ALL)
-        .title("Brewtracker-rs v0.2.0")
+        .title("Brewtracker-rs v0.2.1")
         .title_alignment(Alignment::Center)
         .border_type(BorderType::Rounded);
     f.render_widget(block, size);
@@ -149,7 +149,10 @@ fn generate_details(text: &mut Vec<Spans>, index: usize, app: &mut App) {
     text.push(Spans::from(app.brews.brews[index].description.clone()));
     text.push(Spans::from(""));
     text.push(Spans::from("Ingredients"));
-    generate_details_ingredient_list(text, &app.brews.brews[index].ingredients);
+    generate_details_list(text, &app.brews.brews[index].ingredients, false);
+    text.push(Spans::from(""));
+    text.push(Spans::from("Method"));
+    generate_details_list(text, &app.brews.brews[index].method, true);
 }
 
 fn generate_details_star_rating(rating: u8) -> String {
@@ -163,10 +166,18 @@ fn generate_details_star_rating(rating: u8) -> String {
     return stars;
 }
 
-fn generate_details_ingredient_list(text: &mut Vec<Spans>, ingredients: &Vec<String>) {
+fn generate_details_list(text: &mut Vec<Spans>, ingredients: &Vec<String>, ordered: bool) {
+    let mut ordered_value = 1;
     for ingredient in ingredients.iter() {
-        let mut data = "⬤ ".to_string();
+        let mut data = "".to_string();
+        if ordered {
+            data.push_str(&ordered_value.to_string());
+            data.push_str(". ");
+        } else {
+            data.push_str("⬤ ");
+        }
         data.push_str(ingredient);
         text.push(Spans::from(data));
+        ordered_value += 1;
     }
 }

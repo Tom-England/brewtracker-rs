@@ -2,5 +2,7 @@
 
 A terminal app for tracking your homebrewing projects.
 
-Run:
-`cargo run`
+![Example](example.PNG "Example")
+
+## Usage
+Brewtracker is written in Rust and requires cargo to be installed to build. Clone the repo then run using `cargo run`

@@ -3,39 +3,45 @@
         {
             "name" : "Traditional Mead 01", 
             "rating": 4, 
-            "description": "This is the test description1", 
-            "ingredients": ["Orange Blossom Honey - 735g", "DAP - 2g", "GV1 Yeast - 2g", "Water"]
+            "description": "A simple traditional style mead, semi-sweet with a strong honey flavour that gives way to orange blossom and botanicals. This mead has a very pale colour and a high level of clarity as well as a smooth finish following two months ageing.", 
+            "ingredients": ["Orange Blossom Honey - 735g", "DAP - 2g", "GV1 Yeast - 2g", "Water"],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
         },
         {
             "name" : "Traditional Mead 02", 
             "rating": 2, 
             "description": "This is the test description2",
-            "ingredients": ["Clear Honey - 1.8Kg", "DAP - 5g", "GV1 Yeast -5g", "Water"]
+            "ingredients": ["Clear Honey - 1.8Kg", "DAP - 5g", "GV1 Yeast -5g", "Water"],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
             
         },
         {
             "name" : "Vanilla + Strawberry Melomel", 
             "rating": 3, 
             "description": "This is the test description3",
-            "ingredients": [""]
+            "ingredients": [""],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
         },
         {
             "name" : "Raspberry + Rhubarb Melomel", 
             "rating": 5, 
             "description": "This is the test description4",
-            "ingredients": [""]
+            "ingredients": [""],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
         },
         {
             "name" : "Blueberry Hydromel", 
             "rating": 1, 
             "description": "This is the test description5",
-            "ingredients": [""]
+            "ingredients": [""],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
         },
         {
             "name" : "Peach Mint Mead", 
             "rating": 2, 
             "description": "This is the test description6",
-            "ingredients": [""]
+            "ingredients": [""],
+            "method": ["Combine ingredients in carboy", "Ferment until gravity reading stabilises", "Rack into secondary", "Bottle when clear", "Drink after two months"]
         }
     ]
 }
