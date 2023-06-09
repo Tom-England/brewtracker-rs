@@ -10,7 +10,7 @@ use crossterm::event::{Event,
 use tui::{backend::Backend, 
     Terminal, 
     Frame, 
-    widgets::{ListItem, Block, List, Borders, BorderType, Paragraph, Wrap}, 
+    widgets::{ListItem, Block, List, Borders, BorderType, Paragraph, Wrap, Table, Row, Cell}, 
     text::{Spans, Span}, style::{Style, Color, Modifier}, 
     layout::{Alignment, Layout, Direction, Constraint}
 };
@@ -123,23 +123,14 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
         .borders(Borders::ALL)
         .title_alignment(Alignment::Center);
     
-    let text = vec![
-        Spans::from("Rating: ★★★★"),
-        Spans::from(""),
-        Spans::from("Description"),
-        Spans::from("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-        Spans::from(""),
-        Spans::from("Ingredients"),
-        Spans::from(" - Honey"),
-        Spans::from(" - Yeast"),
-        Spans::from(" - Water"),
-        Spans::from(" - DAP"),
-        Spans::from(""),
-        Spans::from("Method"),
-        Spans::from("1) Boil 'em"),
-        Spans::from("2) Mash 'em"),
-        Spans::from("3) Stick 'em in a stew"),
-    ];
+    let selected_index = app.brews.state.selected();
+    
+
+    let mut text: Vec<Spans> = Vec::new(); 
+    match selected_index {
+        Some(x) => text.push(Spans::from(app.brews.brews[x].rating.to_string())),
+        None => text.push(Spans::from("Rating Missing"))
+    }
 
     let paragraph = Paragraph::new(text.clone())
         .style(Style::default())
