@@ -18,7 +18,8 @@ pub mod datatypes {
     pub struct Brew{
         pub name: String,
         pub rating: u8,
-        pub description: String
+        pub description: String,
+        pub ingredients: Vec<String>
     }
     
     impl Brews {

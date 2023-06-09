@@ -145,7 +145,11 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
 fn generate_details(text: &mut Vec<Spans>, index: usize, app: &mut App) {
     text.push(Spans::from(generate_details_star_rating(app.brews.brews[index].rating)));
     text.push(Spans::from(""));
+    text.push(Spans::from("Description"));
     text.push(Spans::from(app.brews.brews[index].description.clone()));
+    text.push(Spans::from(""));
+    text.push(Spans::from("Ingredients"));
+    generate_details_ingredient_list(text, &app.brews.brews[index].ingredients);
 }
 
 fn generate_details_star_rating(rating: u8) -> String {
@@ -157,4 +161,12 @@ fn generate_details_star_rating(rating: u8) -> String {
         stars.push('☆');
     }
     return stars;
+}
+
+fn generate_details_ingredient_list(text: &mut Vec<Spans>, ingredients: &Vec<String>) {
+    for ingredient in ingredients.iter() {
+        let mut data = "⬤ ".to_string();
+        data.push_str(ingredient);
+        text.push(Spans::from(data));
+    }
 }
