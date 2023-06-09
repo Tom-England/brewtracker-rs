@@ -17,7 +17,8 @@ pub mod datatypes {
     #[derive(Serialize, Deserialize)]
     pub struct Brew{
         pub name: String,
-        pub rating: u8
+        pub rating: u8,
+        pub description: String
     }
     
     impl Brews {

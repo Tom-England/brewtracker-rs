@@ -10,7 +10,7 @@ use crossterm::event::{Event,
 use tui::{backend::Backend, 
     Terminal, 
     Frame, 
-    widgets::{ListItem, Block, List, Borders, BorderType, Paragraph, Wrap, Table, Row, Cell}, 
+    widgets::{ListItem, Block, List, Borders, BorderType, Paragraph, Wrap}, 
     text::{Spans, Span}, style::{Style, Color, Modifier}, 
     layout::{Alignment, Layout, Direction, Constraint}
 };
@@ -128,8 +128,8 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
 
     let mut text: Vec<Spans> = Vec::new(); 
     match selected_index {
-        Some(x) => text.push(Spans::from(app.brews.brews[x].rating.to_string())),
-        None => text.push(Spans::from("Rating Missing"))
+        Some(x) => generate_details(&mut text, x, app),
+        None => text.push(Spans::from("Nothing Selected"))
     }
 
     let paragraph = Paragraph::new(text.clone())
@@ -140,4 +140,21 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
         .alignment(Alignment::Left)
         .wrap(Wrap { trim: true });
     f.render_widget(paragraph, chunks[1]);
+}
+
+fn generate_details(text: &mut Vec<Spans>, index: usize, app: &mut App) {
+    text.push(Spans::from(generate_details_star_rating(app.brews.brews[index].rating)));
+    text.push(Spans::from(""));
+    text.push(Spans::from(app.brews.brews[index].description.clone()));
+}
+
+fn generate_details_star_rating(rating: u8) -> String {
+    let mut stars: String = "Rating: ".to_string();
+    for _i in 0..rating {
+        stars.push('★');
+    }
+    for _i in 0..(5-rating) {
+        stars.push('☆');
+    }
+    return stars;
 }
