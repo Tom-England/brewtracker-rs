@@ -25,13 +25,25 @@ use crate::datatypes::datatypes::{Brews};
 /// Check the drawing logic for items on how to specify the highlighting style for selected items.
 pub struct App {
     brews: Brews,
+    scroll: u16
 }
 
 impl App {
     pub fn new() -> App {
         App {
             brews: Brews::load_brews_from_file(),
+            scroll: 0
         }
+    }
+
+    fn scroll(&mut self, direction: i8) {
+        if (direction == -1) & (self.scroll > 0) {
+            self.scroll -= 1;
+        }
+        if (direction == 1) & (self.scroll < 9) {
+            self.scroll += 1;
+        }
+        self.scroll %= 10;
     }
 }
 
@@ -54,6 +66,8 @@ pub fn run_app<B: Backend>(
                     KeyCode::Left => app.brews.unselect(),
                     KeyCode::Down => app.brews.next(),
                     KeyCode::Up => app.brews.previous(),
+                    KeyCode::PageDown => app.scroll(1),
+                    KeyCode::PageUp => app.scroll(-1),
                     _ => {}
                 }
             }
@@ -138,7 +152,8 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
             block
         )
         .alignment(Alignment::Left)
-        .wrap(Wrap { trim: true });
+        .wrap(Wrap { trim: true })
+        .scroll((app.scroll, 0));;
     f.render_widget(paragraph, chunks[1]);
 }
 
@@ -153,6 +168,9 @@ fn generate_details(text: &mut Vec<Spans>, index: usize, app: &mut App) {
     text.push(Spans::from(""));
     text.push(Spans::from("Method"));
     generate_details_list(text, &app.brews.brews[index].method, true);
+    text.push(Spans::from(""));
+    text.push(Spans::from(format!("Initial Gravity: {}", app.brews.brews[index].gravity[0])));
+    text.push(Spans::from(format!("Final Gravity: {}", app.brews.brews[index].gravity[1])));
 }
 
 fn generate_details_star_rating(rating: u8) -> String {
