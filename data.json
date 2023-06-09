@@ -1,0 +1,11 @@
+{
+    "brews": [
+        {"name" : "Traditional Mead 01"},
+        {"name" : "Traditional Mead 02"},
+        {"name" : "Vanilla + Strawberry Melomel"},
+        {"name" : "Raspberry + Rhubarb Melomel"},
+        {"name" : "Blueberry Hydromel"},
+        {"name" : "Peach Mint Mead"},
+        {"name" : "TEST TEST TEST"}
+    ]
+}

@@ -15,7 +15,7 @@ use tui::{backend::Backend,
     layout::{Alignment, Layout, Direction, Constraint}
 };
 
-use crate::datatypes::datatypes::StatefulList;
+use crate::datatypes::datatypes::{StatefulList, Brews, Brew};
 
 /// This struct holds the current state of the app. In particular, it has the `items` field which is a wrapper
 /// around `ListState`. Keeping track of the items state let us render the associated widget with its state
@@ -24,12 +24,14 @@ use crate::datatypes::datatypes::StatefulList;
 /// Check the event handling at the bottom to see how to change the state on incoming events.
 /// Check the drawing logic for items on how to specify the highlighting style for selected items.
 pub struct App<'a> {
+    brews: Brews,
     items: StatefulList<(&'a str, usize)>
 }
 
 impl<'a> App<'a> {
     pub fn new() -> App<'a> {
         App {
+            brews: Brews::load_brews_from_file(),
             items: StatefulList::with_items(vec![
                 ("Traditional Mead 01", 1),
                 ("Traditional Mead 02", 2),
@@ -76,11 +78,11 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
 
     // Iterate through all elements in the `items` app and append some debug text to it.
     let items: Vec<ListItem> = app
-    .items
-    .items
+    .brews
+    .brews
     .iter()
     .map(|i| {
-        let lines = vec![Spans::from(i.0)];
+        let lines = vec![Spans::from(i.name.clone())];
         ListItem::new(lines).style(Style::default())
     })
     .collect();

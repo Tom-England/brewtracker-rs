@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 tui = "0.19"
 crossterm = "0.25"
+serde_json = "1.0"
+serde = { version = "1.0.164", features = ["derive"]}
