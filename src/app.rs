@@ -95,7 +95,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     // Surrounding block
     let block = Block::default()
         .borders(Borders::ALL)
-        .title("Brewtracker-rs v0.2.1")
+        .title("Brewtracker-rs v0.2.2")
         .title_alignment(Alignment::Center)
         .border_type(BorderType::Rounded);
     f.render_widget(block, size);
